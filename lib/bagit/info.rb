@@ -35,6 +35,7 @@ module BagIt
     end
 
     def write_bag_info(hash={})
+      FileUtils::mkdir bag_dir unless File.directory? bag_dir
       hash = bag_info.merge(hash)
       hash[@@bag_info_headers[:agent]] = "BagIt Ruby Gem (http://bagit.rubyforge.org)" if hash[@@bag_info_headers[:agent]].nil?
       hash[@@bag_info_headers[:date]] = Date.today.strftime('%Y-%m-%d') if hash[@@bag_info_headers[:date]].nil?

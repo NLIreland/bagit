@@ -22,6 +22,7 @@ module BagIt
 
     # Generate manifest files for all the bag files
     def manifest!
+      setup_bagit_files
 
       # nuke all the existing manifest files
       manifest_files.each { |f| FileUtils::rm f }
@@ -80,7 +81,7 @@ module BagIt
     end
 
     def add_tag_file(path, src_path=nil)
-
+      setup_bagit_files
       f = File.join(@bag_dir, path)
       raise "Tag file already in manifest: #{path}" if tag_files.include?(f)
 

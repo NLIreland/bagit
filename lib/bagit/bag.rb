@@ -19,7 +19,12 @@ module BagIt
     # Make a new Bag based at path
     def initialize(path, info={})
       @bag_dir = path
+      if Dir[File.join(data_dir, "*")].count > 0 || !info.empty?
+        setup_bagit_files(info)
+      end
+    end
 
+    def setup_bagit_files info={}
       # make the dir structure if it doesn't exist
       FileUtils::mkdir bag_dir unless File.directory? bag_dir
       FileUtils::mkdir data_dir unless File.directory? data_dir
@@ -57,6 +62,9 @@ module BagIt
 
     # Add a bag file
     def add_file(base_path, src_path=nil)
+      FileUtils::mkdir bag_dir unless File.directory? bag_dir
+      FileUtils::mkdir data_dir unless File.directory? data_dir
+
       path = File.join(data_dir, base_path)
       raise "Bag file exists: #{base_path}" if File.exist? path
       FileUtils::mkdir_p File.dirname(path)
