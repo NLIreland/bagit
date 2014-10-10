@@ -17,11 +17,13 @@ describe "Tag Info Files" do
       end
     end
 
+    @bag.manifest!
   end
 
   after(:each) do
     @sandbox.cleanup!
   end
+
 
   describe "bagit.txt" do
 
@@ -30,7 +32,7 @@ describe "Tag Info Files" do
       @lines = File.open(path) { |io| io.readlines }
     end
 
-    it "should create a file bagit.txt on bag initialization" do
+    it "should create a file bagit.txt after manifest! was called" do
       File.join(@bag_path, 'bagit.txt').should exist_on_fs
     end
 
