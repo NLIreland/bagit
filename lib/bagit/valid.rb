@@ -82,7 +82,7 @@ module BagIt
     def tag_empty_manifests
       empty = []
       tag_manifested_files.each do |f|
-        if !File.exists?(File.join(bag_dir,f))
+        if !File.exist?(File.join(bag_dir,f))
           empty.push f
         end
       end
